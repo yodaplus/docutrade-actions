@@ -4,13 +4,18 @@
 
   const query = queryString.parse(location.search);
   const action = JSON.parse(window.decodeURI(query.q));
-  const whitelists = ["dev.opencerts.io", "opencerts.io", "tradetrust.io"];
+  const whitelists = ["opencerts.io", "tradetrust.io"];
   let valid;
   let timer = 3;
   let interval;
 
+  const getDomain = hostname => {
+    const parts = hostname.split(".").reverse();
+    return parts[1] + "." + parts[0];
+  };
+
   // use parse to ignore protocols, path, etc...
-  $: valid = whitelists.includes(parse(action.payload.redirect).hostname);
+  $: valid = action.payload.redirect && whitelists.includes(getDomain(parse(action.payload.redirect).hostname));
 
   $: if (valid && !interval) {
     interval = setInterval(() => {
@@ -19,8 +24,12 @@
   }
   $: if (timer === 0) {
     clearInterval(interval);
-    window.location.href = `${action.payload.redirect}${location.search}`
+    // window.location.href = `${action.payload.redirect}${location.search}`;
   }
+  /**
+   *
+  https://action.openattestation.com/?q=%7B%22type%22:%22DOCUMENT%22,%22payload%22:%7B%22uri%22:%22https://api.myjson.com/bins/1a9acm%22,%22key%22:%221b8c334a38f9ff96108303a4ba0cc592f1559eb24f5b48b70c9300c60a34d5e9%22,%22permittedAction%22:%5B%22STORE%22%5D,%22redirect%22:%22https://dev.opencerts.io%22%7D%7D
+   */
 </script>
 
 <style>
@@ -71,9 +80,13 @@
   {:else}
     <div class="container">
       <div class="text">
-        <span class="error">{action.payload.redirect}</span>
-        <br />
-        is not an authorized platform.
+        {#if action.payload.redirect}
+          <span class="error">{action.payload.redirect}</span>
+          <br />
+          is not an authorized platform.
+        {:else}
+          <span class="error">No platform specified</span>
+        {/if}
       </div>
       <div class="img-container">
         <img src="./undraw_cancel_u1it.png" class="icon" alt="redirect" />
