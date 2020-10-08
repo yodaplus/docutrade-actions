@@ -4,7 +4,7 @@
 
   const query = queryString.parse(location.search);
   const action = JSON.parse(window.decodeURI(query.q));
-  const whitelists = ["opencerts.io", "tradetrust.io"];
+  const whitelists = ["opencerts.io", "tradetrust.io", "gov.sg"];
   let valid;
   let timer = 3;
   let interval;
@@ -26,6 +26,10 @@
     clearInterval(interval);
     window.location.href = `${action.payload.redirect}${location.search}`;
   }
+  /**
+   *
+  https://action.openattestation.com/?q=%7B%22type%22:%22DOCUMENT%22,%22payload%22:%7B%22uri%22:%22https://api.myjson.com/bins/1a9acm%22,%22key%22:%221b8c334a38f9ff96108303a4ba0cc592f1559eb24f5b48b70c9300c60a34d5e9%22,%22permittedAction%22:%5B%22STORE%22%5D,%22redirect%22:%22https://dev.opencerts.io%22%7D%7D
+   */
 </script>
 
 <style>
