@@ -14,8 +14,6 @@
     return parts[1] + "." + parts[0];
   };
 
-  const getAnchor = url => (url.split("#").length > 1 ? `#${url.split("#").pop()}` : "");
-
   // use parse to ignore protocols, path, etc...
   $: valid = action.payload.redirect && whitelists.includes(getDomain(parse(action.payload.redirect).hostname));
 
@@ -26,7 +24,7 @@
   }
   $: if (timer === 0) {
     clearInterval(interval);
-    window.location.href = `${action.payload.redirect}${location.search}${getAnchor(window.document.URL)}`;
+    window.location.href = `${action.payload.redirect}${location.search}${window.location.hash}`;
   }
   /**
    *
