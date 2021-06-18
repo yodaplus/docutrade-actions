@@ -4,6 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "integration": "testcafe chrome integration/**/*.ts",
+    "integration:headless": "testcafe chrome:headless integration/**/*.ts --app \"serve ./public --listen 5000 --single\" --app-init-delay 5000",
     "start": "sirv public"
   },
   "devDependencies": {
