@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: "circleci/node:latest-browsers"
+    steps:
+      - checkout
+      - run:
+          name: clean install
+          command: npm ci
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: integration
+          command: npm run integration:headless

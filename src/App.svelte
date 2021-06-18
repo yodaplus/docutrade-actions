@@ -24,7 +24,7 @@
   }
   $: if (timer === 0) {
     clearInterval(interval);
-    window.location.href = `${action.payload.redirect}${location.search}`;
+    window.location.href = `${action.payload.redirect}${location.search}${window.location.hash}`;
   }
   /**
    *
