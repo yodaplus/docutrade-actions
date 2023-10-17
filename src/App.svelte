@@ -16,6 +16,7 @@
 
   // use parse to ignore protocols, path, etc...
   $: valid = action.payload.redirect && whitelists.includes(getDomain(parse(action.payload.redirect).hostname));
+  // $: valid = action.payload.redirect;
 
   $: if (valid && !interval) {
     interval = setInterval(() => {
