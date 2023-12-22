@@ -4,7 +4,7 @@
 
   const query = queryString.parse(location.search);
   const action = JSON.parse(window.decodeURI(query.q));
-  const whitelists = ["opencerts.io", "tradetrust.io", "gov.sg", "yodaplus.net"];
+  const whitelists = ["opencerts.io", "tradetrust.io", "gov.sg", "yodaplus.net", "docutrade.io"];
   let valid;
   let timer = 3;
   let interval;
